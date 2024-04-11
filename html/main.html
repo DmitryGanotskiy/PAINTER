@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/main.css">
+</head>
+
+<script>
+    document.addEventListener('wheel', function(e) {
+    if (e.ctrlKey) {
+        e.preventDefault();
+    }
+}, { passive: false });
+
+</script>
+
+
+<script src="../js/operations.js" defer></script>
+<script src="../js/listener.js"></script>
+
+<body>
+
+    <video id="videoBackground" autoplay muted>
+        <source src="../img/back.mp4" type="video/mp4">
+    </video>
+
+<div class="swiper slider"></div>
+<div class="swiper-wrapper slider__wrapper">
+    <section class="swiper-slide layers">
+        <div class="layers__container">
+            <div class="layers__item layer-1">
+                <button id="toggleToolsBtn">Tools</button>
+                <div id="toolsContainer" style="display: none;">
+                    <div class="tool"><input type="color" id="colorPicker"></div>
+                    <div class="tool"><label for="brushSize">Brush Size:</label></div>
+                    <div class="tool"><input type="range" id="brushSize" min="1" max="50" value="10"></div>
+                    <div class="tool"><label for="brushTransparency">Brush Transparency:</label></div>
+                    <div class="tool"><input type="range" id="brushTransparency" min="0.01" max="1" value="1" step="0.01"></div>
+                    <div class="tool"><button style="margin-bottom: 5px;" id="clearCanvasBtn">Clear Canvas</button></div>
+                    <div class="tool"><button style="margin-bottom: 5px;" id="brushBtn">Brush</button></div>
+                    <div class="tool"><button style="margin-bottom: 5px;" id="lineBtn">Line (in process)</button></div>
+                    <div class="tool"><button style="margin-bottom: 5px;" id="drawRectangleBtn">Rectangle</button></div>
+                    <div class="tool"><button style="margin-bottom: 5px;" id="drawCircleBtn">Circle</button></div>
+                    <div class="tool"><button style="margin-bottom: 5px;" id="drawTriangleBtn">Triangle</button></div>
+                    <div class="tool"><button style="margin-bottom: 5px;" id="drawTextBtn">Text (in process)</button></div>
+                    <div class="tool"><button style="margin-bottom: 5px;" id="changeCanvasColorBtn">Change Color</button></div>
+                </div> <br><br>
+
+                <button id="toggleToolsBtnFilters">Filters</button>
+                <div id="toolsContainerFilters" style="display: none;">
+                    <div class="tool"><label>Blur:</label></div>
+                    <div class="tool"><input type="range" id="blur" min="0" max="50" value="0"></div>
+                    <div class="tool"><label>Brightness:</label></div>
+                    <div class="tool"><input type="range" id="brightness" min="0" max="200" value="100"></div>
+                    <div class="tool"><label>Contrast:</label></div>
+                    <div class="tool"><input type="range" id="contrast" min="0" max="200" value="100"></div>
+                    <div class="tool"><label>Gray:</label></div>
+                    <div class="tool"><input type="range" id="grayscale" min="0" max="100" value="0"></div>
+                    <div class="tool"><label>Sepia:</label></div>
+                    <div class="tool"><input type="range" id="sepia" min="0" max="100" value="0"></div>
+                    <div class="tool"><label>Grid:</label></div>
+                    <div class="tool"><input type="range" id="grid" min="0" max="50" value="0"></div>
+                </div> <br><br>
+
+                <button id="toggleToolsBtnImage">File</button>
+                <br>
+                <div id="toolsContainerImage" style="display: none;">
+                    <div class="tool"><button id="new">New</button></div>
+                    <div class="tool"><button id="save">Save</button></div>
+                    <div class="tool"><button id="load">Load</button></div>
+                    <div class="tool"><button id="paralax">Paralax</button></div>
+                    <div class="tool"><button id="background">Background</button></div>
+                </div> <br><br>
+
+                <label for="canvasWidth">Canvas Width (%):</label>
+                <input type="number" id="canvasWidth" min="10" max="100" value="100">%
+                <label for="canvasHeight">Canvas Height (%):</label>
+                <input type="number" id="canvasHeight" min="10" max="100" value="100">%
+                <button id="resizeCanvasBtn">Resize Canvas</button>
+            </div>
+
+            <div class="layers__item layer-2">
+                <canvas id="canvas" width="800" height="600"></canvas>
+                <input type="range" id="negative" min="0" max="100" value="0">
+                <button id="export">Export</button>   
+                <button id="back">&#x21a9;</button>                
+            </div>
+
+            <div class="layers__item layer-3">
+                <div id="layers-panel">
+                    <div id="layer-box" class="layer-box"></div>
+                </div>
+                
+                <button id="add-layer-btn">Add Layer</button>
+            </div>
+        </div>
+    </section>
+</div>
+
+    <script>
+        window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+    </script>
+</body>
+</html>

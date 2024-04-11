@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <video id="bg-video" autoplay muted loop>
+        <source src="img/back.mp4" type="video/mp4">
+    </video>
+    <section class="layers">
+        <div class="hero-content">
+            <h1>DMITRY GANOTSKIY</h1>
+            <div class="hero-content-p">The second Project</div>
+            <button class="button-start" onclick="transitionToPage('html/main.html')">Start</button>
+			<h6 style="margin-top: 25vh; margin-left: 41vh; position: absolute;">video taken from Pexels</h6>
+        </div>
+    </section>
+
+	<script>
+        document.addEventListener('wheel', function(e) {
+            if (e.ctrlKey) {
+                e.preventDefault();
+            }
+        }, { passive: false });
+
+		window.addEventListener('load', function() {
+            document.body.classList.add('loaded');
+        });
+
+		window.transitionToPage = function(href) {
+			document.querySelector('body').style.opacity = 0
+			setTimeout(function() { 
+				window.location.href = href
+			}, 500)
+		}
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const imageContainers = document.querySelectorAll('.image-container');
+        });
+	</script>
+</body>
+</html>
