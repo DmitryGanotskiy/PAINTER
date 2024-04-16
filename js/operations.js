@@ -23,7 +23,8 @@ class DrawingApp {
         this.image = {
             file: null,
             position: {x: 0, y: 0},
-            size: {width: 0, height: 0}
+            size: {width: 0, height: 0},
+            transparency: 0
         }
         this.images = []
         this.setupEventListeners();
@@ -100,29 +101,35 @@ class DrawingApp {
         this.redrawCanvas();
     }
 
-    redrawCanvas = () => {
-        this.ctx.globalAlpha = 1
+    redrawCanvas = async () => {
+        this.ctx.globalAlpha = 1;
         this.ctx.fillStyle = this.canvasBackgroundColor;
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         this.ctx.lineWidth = 0.4;
-        this.drawGrid();
-
-        this.layers.layerNumbers.forEach(layer => {
-            try{
-                if(this.images.length > 0) {
-                    this.images.forEach(img => { 
-                        if(img.layer == layer.number && layer.check){
-                            this.ctx.drawImage(img.file, img.position.x, img.position.y, img.size.width, img.size.height);
+    
+        await this.drawGrid();
+    
+        this.layers.layerNumbers.forEach(async (layer) => {
+            try {
+                if (this.images.length > 0) {
+                    this.images.forEach(async (img) => {
+                        if (img.layer == layer.number && layer.check) {
+                            this.ctx.globalAlpha = img.transparency;
+                            await this.ctx.drawImage(img.file, img.position.x, img.position.y, img.size.width, img.size.height);
                         }
                     });
                 }
-            } catch(e){console.log("No images yet")}
-
-            this.figures.forEach(figure => {
-                if(figure.layer == layer.number && layer.check)this.drawFigure(figure);
-            });
+            } catch (e) {
+                console.log("No images yet");
+            }
+    
+            this.figures.forEach(async (figure) => {
+                if (figure.layer == layer.number && layer.check) {
+                    await this.drawFigure(figure);
+                }
+            })
         })
-    }
+    }    
 
     drawFigure = (figure) => {
         this.ctx.strokeStyle = `${figure.color}`;
@@ -365,33 +372,50 @@ class DrawingApp {
         }
     }
 
-    importImage = (position, size) => {
+    importImage = async (position, size) => {
         const input = document.createElement('input');
         input.type = 'file';
         input.accept = 'image/*';
-        input.onchange = e => {
-            const file = e.target.files[0];
-            if (file) {
+    
+        const file = await new Promise((resolve, reject) => {
+            input.onchange = (e) => resolve(e.target.files[0]);
+            input.click();
+        });
+    
+        if (file) {
+            try {
                 const reader = new FileReader();
-                reader.onload = event => {
-                    const image = {
-                        file: new Image(),
-                        layer: this.layers.selected,
-                        position: { x: position.x, y: position.y },
-                        size: { width: size.height, height: size.width }
-                    };
-                    image.file.onload = () => {
+    
+                const fileDataURL = await new Promise((resolve, reject) => {
+                    reader.onload = (event) => resolve(event.target.result);
+                    reader.onerror = (error) => reject(error);
+                    reader.readAsDataURL(file);
+                });
+    
+                const image = {
+                    file: new Image(),
+                    layer: this.layers.selected,
+                    position: { x: position.x, y: position.y },
+                    size: { width: size.height, height: size.width },
+                    transparency: this.brushTransparency.value
+                };
+    
+                await new Promise((resolve, reject) => {
+                    image.file.onload = () => { 
                         this.images.push(image);
                         this.redrawCanvas();
+                        resolve();
                     };
-                    image.file.src = event.target.result;
-                };
-                reader.readAsDataURL(file);
-                this.lastDrawn = 'image'
+                    image.file.onerror = (e) => reject(e);
+                    image.file.src = fileDataURL;
+                });
+    
+                this.lastDrawn = 'image';
+            } catch (e) {
+                console.log(e);
             }
-        };
-        input.click();
-    }
+        }
+    }    
 
     applyFilters = () => {
         const blur = document.getElementById('blur').value;
@@ -493,7 +517,7 @@ class DrawingApp {
         this.backgroundEffect = !this.backgroundEffect
     }
 
-    save = () => {
+    save = async () => {
         localStorage.setItem('colorPicker', this.colorPicker.value);
         localStorage.setItem('brushSize', this.brushSize.value);
         localStorage.setItem('brushTransparency', this.brushTransparency.value);
@@ -513,7 +537,7 @@ class DrawingApp {
         localStorage.setItem('layerNumbers', JSON.stringify(this.layers.layerNumbers));
     }
 
-    load = () => {
+    load = async () => {
         this.colorPicker.value = localStorage.getItem('colorPicker');
         this.brushSize.value = localStorage.getItem('brushSize');
         this.brushTransparency.value = localStorage.getItem('brushTransparency');
