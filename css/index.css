@@ -2,6 +2,11 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
 }
 
 body {
@@ -23,17 +28,25 @@ body.loaded {
 .hero-content {
 	text-align: center;
 	text-transform: uppercase;
-	line-height: 1.35em;
+	line-height: 2em;
 }
 
 .hero-content h1 {
 	font-size: 10vh;
 	margin-bottom: 10vh;
+	line-height: 1em;
 }
 
 .hero-content-p {
 	margin-top: 10vh;
 	font-size: 5vh;
+}
+
+
+h1, h6, .hero-content-p{
+    background: linear-gradient(to right, rgb(255, 0, 43), rgb(210, 7, 236));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .button-start {
@@ -49,20 +62,9 @@ body.loaded {
 	margin-top: 10vh;
 	box-shadow: inset 0 0 10px rgba(128, 0, 128, 0.5), inset 0 0 20px rgba(128, 0, 128, 0.5), inset 0 0 30px rgba(128, 0, 128, 0.5);
 }
-@keyframes pulse {
-    0% {
-        box-shadow: inset 0 0 10px rgba(128, 0, 128, 0.3), inset 0 0 20px rgba(231, 16, 16, 0.7), inset 0 0 30px rgba(128, 0, 128, 0.3);
-    }
-    50% {
-        box-shadow: inset 0 0 15px rgba(128, 0, 128, 0.3), inset 0 0 30px rgba(231, 16, 16, 0.7), inset 0 0 40px rgba(128, 0, 128, 0.3);
-    }
-    100% {
-        box-shadow: inset 0 0 10px rgba(128, 0, 128, 0.3), inset 0 0 20px rgba(231, 16, 16, 0.7), inset 0 0 30px rgba(128, 0, 128, 0.3);
-    }
-}
 
 .button-start:hover{
-    animation: pulse 2s infinite; 
+	box-shadow: inset 0 0 10px rgba(128, 0, 128, 0.5), inset 0 0 20px rgba(255, 0, 0, 0.674), inset 0 0 30px rgba(128, 0, 128, 0.5);
 	font-size: 4vh; 
 }
 
