@@ -88,7 +88,7 @@ class DrawingApp {
     }
 
     resizeCanvas = () => {
-        const widthPercent = parseInt(this.canvasWidthInput.value);
+        const widthPercent = parseInt(this.canvasWidthInput.value)/1.5
         const heightPercent = parseInt(this.canvasHeightInput.value);
         this.canvas.style.width = widthPercent + '%';
         this.canvas.style.height = heightPercent + '%';

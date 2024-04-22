@@ -29,6 +29,7 @@ body.loaded {
 	text-align: center;
 	text-transform: uppercase;
 	line-height: 2em;
+	margin-bottom: 30%;
 }
 
 .hero-content h1 {
@@ -38,7 +39,7 @@ body.loaded {
 }
 
 .hero-content-p {
-	margin-top: 10vh;
+	margin-top: 5vh;
 	font-size: 5vh;
 }
 
@@ -49,8 +50,17 @@ h1, h6, .hero-content-p{
     -webkit-text-fill-color: transparent;
 }
 
+h6{
+	margin-top: 45vh; 
+	margin-left: 43vh; 
+	position: absolute;
+}
+
 .button-start {
+	position: absolute;
 	text-transform: uppercase;
+	left: 50%;
+	transform: translate(-50%, 0);
 	background-color: transparent;
 	color: #fff;
 	border-radius: 10em;

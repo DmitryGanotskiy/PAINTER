@@ -66,5 +66,5 @@ class LayerManager {
                 canvas.style.visibility = isChecked ? 'visible' : 'hidden';
             }
         }
-    }    
+    }
 }

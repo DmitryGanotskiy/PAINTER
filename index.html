@@ -17,11 +17,13 @@
             <h1 id="name">DMITRY GANOTSKIY</h1>
             <div class="hero-content-p">The second Project</div>
             <button class="button-start" onclick="transitionToPage('html/main.html')">Start</button>
-			<h6 style="margin-top: 25vh; margin-left: 41vh; position: absolute;">video is from Pexels</h6>
+			<h6>video is from Pexels</h6>
         </div>
     </section>
 
 	<script>
+        let startbutton = document.querySelector('.button-start')
+
         document.addEventListener('wheel', function(e) {
             if (e.ctrlKey) {
                 e.preventDefault();
@@ -42,6 +44,10 @@
         document.addEventListener('DOMContentLoaded', function() {
             const imageContainers = document.querySelectorAll('.image-container');
         });
+
+        startbutton.addEventListener('click', function(){
+            startbutton.innerHTML = 'Welcome';
+        })
 	</script>
 </body>
 </html>
