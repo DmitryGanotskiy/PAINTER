@@ -33,7 +33,6 @@ class DrawingApp {
         this.changeCanvasColor();
         this.applyFilters()
         this.checkClick()
-
     }
 
     checkClick = () => {
@@ -330,9 +329,9 @@ class DrawingApp {
         this.isTextActive = true;
     }
 
-    changeCanvasColor = () => {
+    changeCanvasColor = async() => {
         this.canvasBackgroundColor = this.canvasBackgroundColor === '#fff' ? '#000' : '#fff';
-        this.redrawCanvas();
+        await this.redrawCanvas();
     }
 
     toggleTools = () => {
@@ -558,8 +557,8 @@ class DrawingApp {
         this.layers.selected = localStorage.getItem('selected');
         this.layers.layerNumbers = JSON.parse(localStorage.getItem('layerNumbers'));
 
-        this.redrawCanvas()
-        this.resizeCanvas()
+        await this.redrawCanvas()
+        await this.resizeCanvas()
     }
 
     delete = () => {
